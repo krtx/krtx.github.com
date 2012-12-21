@@ -10,7 +10,7 @@ Array.prototype.shuffle = function() {
 }
 
 $(document).ready(function(){
-    var width = 500, height = 500;
+    var width = 500, height = 500, radius = 5;
     var paper = Raphael("holder", width, height);
 
     var base = paper.rect(0, 0, width, height)
@@ -18,14 +18,14 @@ $(document).ready(function(){
         .attr('stroke', '#888');
     
     $('#holder').click(function (ev) {
-        paper.circle(ev.offsetX, ev.offsetY, 7)
+        paper.circle(ev.offsetX, ev.offsetY, radius)
             .attr('fill', '#f88')
             .attr('stroke', '#fff');
         $('#points').val($('#points').val() + ev.offsetX + " " + ev.offsetY + " 1\n");
         $('#count').html(parseInt($('#count').html(), 10) + 1);
     });
     $('#holder').bind('contextmenu', function (ev) {
-        paper.circle(ev.offsetX, ev.offsetY, 7)
+        paper.circle(ev.offsetX, ev.offsetY, radius)
             .attr('fill', '#8f8')
             .attr('stroke', '#fff');
         $('#points').val($('#points').val() + ev.offsetX + " " + ev.offsetY + " -1\n");
