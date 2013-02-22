@@ -79,7 +79,7 @@ $(function () {
     balls.push(ball(paper, Math.random() * width, Math.random() * height));
   }
 
-  $('#holder').mousedown(function (ev) {
+  $('#holder').mousemove(function (ev) {
     var mx = ev.offsetX, my = ev.offsetY;
     var i;
     for (i = 0; i < balls.length; i++) {
