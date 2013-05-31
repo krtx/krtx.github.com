@@ -103,12 +103,19 @@ var replace_vars = function (c) {
 };
 
 var interpret = function (str) {
-    if (str[1] === '=') {
-        if (str.length === 2) delete vars[str[0]];
-        vars[str[0]] = replace_vars(cparse(str.slice(2)));
-        return vars[str[0]];
+    var a = str.lastIndexOf("=");
+    if (a === -1) return replace_vars(cparse(str));
+    else {
+        var vn = str.slice(0, a), rest = str.slice(a + 1);
+        if (rest === '') {
+            delete vars[vn];
+            return vn;
+        }
+        else {
+            vars[vn] = replace_vars(cparse(rest));
+            return vars[vn];
+        }
     }
-    else return replace_vars(cparse(str));
 };
 
 vars['B'] = interpret("s(ks)k");
