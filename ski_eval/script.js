@@ -92,6 +92,34 @@ var cparse = function (c) {
     return ctrans(cparse_str({c: c, idx: 0}));
 };
 
+var vars = {};
+
+var replace_vars = function (c) {
+    if (typeof c === 'string') {
+        if (vars[c]) return vars[c];
+        else return c;
+    }
+    else return c.map(function (v) { return replace_vars(v); });
+};
+
+var interpret = function (str) {
+    if (str[1] === '=') {
+        if (str.length === 2) delete vars[str[0]];
+        vars[str[0]] = replace_vars(cparse(str.slice(2)));
+        return vars[str[0]];
+    }
+    else return replace_vars(cparse(str));
+};
+
+vars['B'] = interpret("s(ks)k");
+vars['C'] = interpret("s(BBs)(kk)");
+vars['D'] = interpret("s(k(sB))k");
+vars['E'] = interpret("BBC");
+vars['W'] = interpret("ss(ki)");
+vars['M'] = interpret("B(Bs)");
+vars['N'] = interpret("s(ks)");
+vars['T'] = interpret("MB");
+
 var eval_once = function (c) {
     if (typeof c === 'string') {
         return {f: c, args: []};
@@ -160,9 +188,9 @@ $(function (){
                 $('#hist').html('');
                 return ;
             }
-            var c = cparse(t)
-              , e = expand(eval_once(c));
-            $('#hist').html(to_string(c) + '<br>' + $('#hist').html());
+            var c = interpret(t);
+            var e = expand(eval_once(c));
+            $('#hist').html(t + '<br>' + $('#hist').html());
             $('#term').val(to_string(e));
         }
     });
