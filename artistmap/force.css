@@ -1,0 +1,21 @@
+circle.node {
+    stroke: #f88;
+    fill: #f88;
+    stroke-width: 1.5px;
+}
+
+line.link {
+    stroke: #999;
+    stroke-width: 2;
+    stroke-opacity: .6;
+}
+
+svg text {
+    font-size: small;
+}
+
+svg frame {
+    stroke: steelblue;
+    fill: white;
+    stroke-width: 1.5px;
+}
